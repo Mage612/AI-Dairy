@@ -139,7 +139,7 @@ function App() {
 
   return <main className="app">
     <header className="topbar">
-      <div><h1>AI&Dairy</h1><p>个人成长管理助手 V0.4</p></div>
+      <div><h1>AI&Diary</h1><p>个人成长管理助手 V0.4</p></div>
       <div className="top-actions">
         <button className={view === "chat" ? "nav-button active" : "nav-button"} type="button" onClick={() => setView("chat")}><MessageCircle size={16} /><span>聊天</span></button>
         <button className={view === "actions" ? "nav-button active" : "nav-button"} type="button" onClick={() => setView("actions")}><CheckSquare size={16} /><span>行动板</span></button>
@@ -258,8 +258,8 @@ function sortTasks(tasks, mode) {
 
 function RecordsView({ records, expandedDate, setExpandedDate }) {
   const rows = Object.values(records || {}).filter((record) => record && record.date).sort((a, b) => b.date.localeCompare(a.date));
-  function exportJson() { downloadFile("ai-dairy-records.json", JSON.stringify(rows.map(toExportRow), null, 2), "application/json;charset=utf-8"); }
-  function exportCsv() { const csvRows = [EXPORT_COLUMNS.map(([label]) => label), ...rows.map((record) => { const row = toExportRow(record); return EXPORT_COLUMNS.map(([, key]) => row[key] ?? ""); })]; const csv = csvRows.map((row) => row.map(escapeCsvCell).join(",")).join("\n"); downloadFile("ai-dairy-records.csv", `\uFEFF${csv}`, "text/csv;charset=utf-8"); }
+  function exportJson() { downloadFile("ai-diary-records.json", JSON.stringify(rows.map(toExportRow), null, 2), "application/json;charset=utf-8"); }
+  function exportCsv() { const csvRows = [EXPORT_COLUMNS.map(([label]) => label), ...rows.map((record) => { const row = toExportRow(record); return EXPORT_COLUMNS.map(([, key]) => row[key] ?? ""); })]; const csv = csvRows.map((row) => row.map(escapeCsvCell).join(",")).join("\n"); downloadFile("ai-diary-records.csv", `\uFEFF${csv}`, "text/csv;charset=utf-8"); }
   return <section className="records-view"><div className="records-toolbar"><div><h2>每日记录表</h2><p>{rows.length} 天记录 · 每天一行</p></div><div className="export-actions"><button className="tool-button" type="button" onClick={exportCsv} disabled={!rows.length}><Download size={16} /><span>导出 CSV</span></button><button className="tool-button" type="button" onClick={exportJson} disabled={!rows.length}><FileJson size={16} /><span>导出 JSON</span></button></div></div>{rows.length === 0 ? <div className="empty"><h2>还没有每日记录。</h2><p>发送一条今日总结后，这里会自动生成按日期归档的表格。</p></div> : <><div className="records-table-wrap"><table className="records-table"><thead><tr><th>日期</th><th>周几</th><th>AI今日总结</th><th>科研学习</th><th>技能成长</th><th>幸福小事</th><th>情绪</th><th>记录</th><th>同步</th></tr></thead><tbody>{rows.map((record) => <React.Fragment key={record.date}><tr className="data-row" onClick={() => setExpandedDate(expandedDate === record.date ? "" : record.date)}><td>{record.date}</td><td>{getWeekday(record.date)}</td><td className="wide-cell">{record.summary || "未生成总结"}</td><td>{record.research || "-"}</td><td>{record.growth || "-"}</td><td>{record.happiness || "-"}</td><td>{record.emotion || "-"}</td><td>{record.entry_count || 1}</td><td>{formatSyncStatus(record.sync)}</td></tr>{expandedDate === record.date && <tr className="detail-row"><td colSpan="9"><RecordDetail record={record} /></td></tr>}</React.Fragment>)}</tbody></table></div><div className="record-cards-mobile">{rows.map((record) => <article className="record-card" key={record.date}><button className="record-main" type="button" onClick={() => setExpandedDate(expandedDate === record.date ? "" : record.date)}><span>{formatDateWithWeekday(record.date)}</span><strong>{record.summary || "未生成总结"}</strong><small>{record.entry_count || 1} 次记录 · {formatSyncStatus(record.sync)} · 更新于 {formatTime(record.updated_at)}</small></button>{expandedDate === record.date && <RecordDetail record={record} />}</article>)}</div></>}</section>;
 }
 

@@ -1,4 +1,4 @@
-# AI&Dairy Deployment
+# AI&Diary Deployment
 
 ## 1. Supabase
 

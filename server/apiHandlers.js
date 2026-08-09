@@ -5,7 +5,7 @@ export function getHealth() {
   const provider = (process.env.LLM_PROVIDER || "mock").toLowerCase();
   return {
     ok: true,
-    service: "AI&Dairy API",
+    service: "AI&Diary API",
     llm_provider: provider,
     llm_enabled: hasProviderKey(provider),
     supabase_enabled: isSupabaseConfigured()

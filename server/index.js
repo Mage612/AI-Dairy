@@ -62,7 +62,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`AI&Dairy API listening on http://localhost:${PORT}`);
+  console.log(`AI&Diary API listening on http://localhost:${PORT}`);
 });
 
 function loadEnvFile() {

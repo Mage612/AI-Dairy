@@ -48,7 +48,7 @@ export async function callLLM({ text, intent, now }) {
 function buildSystemPrompt(intent, now) {
   if (intent === "INTENT") {
     return [
-      "你是 AI&Dairy 的意图识别器。",
+      "你是 AI&Diary 的意图识别器。",
       `当前时间：${now.toISOString()}`,
       "只输出 JSON，不要 Markdown。",
       "判断用户输入最符合哪一种：PLAN / SUMMARY / CHAT。",
@@ -61,7 +61,7 @@ function buildSystemPrompt(intent, now) {
   }
 
   return [
-    "你是 AI&Dairy 的个人成长管理助手。",
+    "你是 AI&Diary 的个人成长管理助手。",
     `当前意图：${intent}`,
     `当前时间：${now.toISOString()}`,
     "请只基于用户输入，不要虚构。",
